@@ -34,7 +34,7 @@ plugins=(battery brew django extract git node npm osx pip python ssh-agent vi-mo
 source $ZSH/oh-my-zsh.sh
 
 # z command, courtesy of https://github.com/rupa/z
-source $ZSH/../Dotfiles/lib/z.sh
+source $ZSH/../lib/z.sh
 function precmd() {
   # keep track of directories that are popular
   _z --add "$(pwd -P)"
