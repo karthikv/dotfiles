@@ -43,10 +43,17 @@ function precmd() {
 # vim aliases
 alias v='mvim -v'
 alias vim='mvim -v'
+alias rmv='find . -type f -regex ".*\.sw[pon]" -exec rm -f {} \;'
 
 # git aliases
 alias gd='git diff'
 alias gl='git log'
+alias gf='git fetch'
 
 # node
 alias ndm='nodemon'
+
+# easy directory switching
+alias ...='../..'
+alias ....='../../..'
+alias .....='../../../..'

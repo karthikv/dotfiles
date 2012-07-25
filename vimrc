@@ -103,13 +103,25 @@ let g:CommandTCancelMap=['<C-c>', '<Esc>']
 "helpful shortcuts
 nmap <Leader>l :vsplit<CR><C-l>
 nmap <Leader>j :split<CR>
-nmap <Leader>q :q<CR>
 nmap <Leader>r :redraw!<CR>
 nmap <Leader>s :set spell! spell?<CR>
 nmap <Leader>h :set hls! hls?<CR>
 nmap <Leader>2 :set ts=2 sts=2 sw=2 et<CR>
 nmap <Leader>4 :set ts=4 sts=4 sw=4 et<CR>
 nmap <Leader>p :set invpaste paste?<CR>
+nmap <C-t> :tabnew<CR>
+nmap ˙ :tabprev<CR>
+nmap ¬ :tabnext<CR>
+nmap <C-w><C-w> :q<CR>
+
+"end brace shortcut
+function! CleverBrace()
+  if strpart( getline('.'), col('.')-2, 1 ) =~ '{'
+    return "\<CR>}\<ESC>O"
+  else
+    return "\<CR>"
+endfunction
+inoremap <CR> <C-R>=CleverBrace()<CR>
 
 "spelling corrections
 iab teh the
