@@ -47,8 +47,23 @@ alias rmv='find . -type f -regex ".*\.sw[pon]" -exec rm -f {} \;'
 
 # git aliases
 alias gd='git diff'
+alias gdc='git diff --cached'
 alias gl='git log'
 alias gf='git fetch'
+alias gr='git rebase'
+alias gro='git rebase origin/$(current_branch)'
+alias gmo='git merge origin/$(current_branch)'
+alias gcb='git checkout -b'
+alias gpo='git push -u origin $(current_branch)'
+alias gpk='git push -u karthikv $(current_branch)'
+alias grs='git reset --soft'
+alias grh='git reset --hard'
+alias gc='git checkout'
+
+# hub aliases
+alias hc='hub create'
+alias hb='hub browse'
+alias hpi='hub pull-request -i'
 
 # node
 alias ndm='nodemon'
