@@ -136,6 +136,7 @@ set showmode
 "file types
 au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.epy set filetype=htmldjango
+au BufNewFile,BufRead *.json set filetype=json
 
 "highlighting
 highlight LineNr ctermfg=black

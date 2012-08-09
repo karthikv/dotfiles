@@ -59,6 +59,10 @@ alias gpk='git push -u karthikv $(current_branch)'
 alias grs='git reset --soft'
 alias grh='git reset --hard'
 alias gc='git checkout'
+alias gsh='git stash'
+alias gsha='git stash apply'
+alias gshl='git stash list'
+alias gshp='git stash pop'
 
 # hub aliases
 alias hc='hub create'
@@ -72,3 +76,7 @@ alias ndm='nodemon'
 alias ...='../..'
 alias ....='../../..'
 alias .....='../../../..'
+
+# nodefront
+alias nodefront='~/Active/nodefront/nodefront.js'
+alias nf='nodefront'
