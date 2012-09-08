@@ -1,7 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_cnt =9
 let g:netrw_dirhist_1='/Users/karthikv/.oh-my-zsh/plugins/git'
 let g:netrw_dirhist_2='/Users/karthikv/Active/Mozilla/napkin/test'
 let g:netrw_dirhist_3='/Users/karthikv/Active/nodefront/test'
 let g:netrw_dirhist_4='/Users/karthikv/.vim'
 let g:netrw_dirhist_5='/Users/karthikv/.vim/syntax_checkers'
+let g:netrw_dirhist_6='/Users/karthikv/Active/Mozilla/xtag-elements/date-time-picker'
+let g:netrw_dirhist_7='/Users/karthikv/Active/Mozilla/napkin/export/base-app/routes'
+let g:netrw_dirhist_8='/Users/karthikv/Active/Mozilla/napkin/.git'
+let g:netrw_dirhist_9='/Users/karthikv/Active/Mozilla/napkin-presentation/.git'

@@ -60,6 +60,8 @@ alias gpo='git push -u origin $(current_branch)'
 alias gpk='git push -u karthikv $(current_branch)'
 alias grs='git reset --soft'
 alias grh='git reset --hard'
+alias grho='git reset --hard origin/$(current_branch)'
+alias grhk='git reset --hard karthikv/$(current_branch)'
 alias gc='git checkout'
 alias gsh='git stash'
 alias gsha='git stash apply'
@@ -72,10 +74,12 @@ alias grbdo='git push origin'
 alias grbdk='git push karthikv'
 alias gra='git remote add'
 alias grm='git remote rm'
+alias gcl='git changelog'
 
 # hub aliases
 alias hc='hub create'
 alias hb='hub browse'
+alias hp='hub pull-request'
 alias hpi='hub pull-request -i'
 
 # node
