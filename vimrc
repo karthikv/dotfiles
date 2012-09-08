@@ -1,3 +1,6 @@
+"pathogen
+call pathogen#runtime_append_all_bundles()
+
 "no comaptibility with vi
 set nocompatible
 
