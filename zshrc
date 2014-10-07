@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
+PATH="/usr/local/bin:$PATH"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -29,7 +30,7 @@ ZSH_THEME="terminalparty"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(battery brew django extract git node npm osx pip python ssh-agent vi-mode)
+plugins=(battery brew django extract git node npm osx pip python ssh-agent gpg-agent)
 
 source $ZSH/oh-my-zsh.sh
 
