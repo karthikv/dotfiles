@@ -1,6 +1,20 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-PATH="/usr/local/bin:$PATH"
+
+export PATH=/usr/local/sbin:$PATH
+export PATH=/usr/local/bin:$PATH
+export PATH=$PATH:$HOME/Bin
+export PATH=$PATH:/usr/local/Cellar/opencv3/3.1.0/bin
+export PATH=$PATH:$HOME/.stack/programs/x86_64-osx/ghc-7.10.3/bin
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/Active/go/bin
+export PATH=$PATH:$HOME/.cargo/bin
+
+export GOPATH=~/Active/go
+export ANDROID_HOME=/usr/local/opt/android-sdk
+export DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH:/usr/lib:/usr/local/opt/opencv3/lib:/usr/local/lib
+export PYTHONPATH=$PYTHONPATH:/usr/local/opt/opencv3/lib/python2.7/site-packages
+export EDITOR=nvim
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -30,7 +44,7 @@ ZSH_THEME="terminalparty"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(battery brew django extract git node npm osx pip python ssh-agent gpg-agent)
+plugins=(battery brew django extract git node npm osx pip python gpg-agent)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -42,11 +56,13 @@ function precmd() {
 }
 
 # vim aliases
-alias v='mvim -v'
-alias vim='mvim -v'
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
 alias rmv='find . -type f -regex ".*\.sw[pon]" -exec rm -f {} \;'
 
 # git aliases
+alias gi='git init'
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias gl='git log'
@@ -68,7 +84,8 @@ alias gsh='git stash'
 alias gsha='git stash apply'
 alias gshl='git stash list'
 alias gshp='git stash pop'
-gdcv() { git diff --cached -w "$@" | view - }
+gdv() { git diff -w "$@" | nvim -R - }
+gdcv() { git diff --cached -w "$@" | nvim -R - }
 alias gbd='git branch -d'
 alias gbD='git branch -D'
 alias grbdo='git push origin'
@@ -76,6 +93,7 @@ alias grbdk='git push karthikv'
 alias gra='git remote add'
 alias grm='git remote rm'
 alias gcl='git changelog'
+alias gct='git commit -v'
 
 # hub aliases
 alias hc='hub create'
@@ -94,3 +112,53 @@ alias .....='../../../..'
 # nodefront
 alias nodefront='~/Active/nodefront/nodefront.js'
 alias nf='nodefront'
+
+# docker
+alias d='docker'
+alias db='docker build'
+alias dr='docker run'
+alias de='docker exec'
+alias drm='docker rm'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias ds='docker stop'
+alias dl='docker logs'
+alias dst='docker stats'
+alias dsa='docker stop `docker ps -aq`'
+alias di='docker images'
+alias dm='docker-machine'
+alias dmi='docker-machine ip default'
+alias dme='eval $(docker-machine env default)'
+alias dmr='docker-machine restart default'
+alias dclean='docker rm `docker ps -aq`; docker rmi `docker images -q -f "dangling=true"`'
+alias dc='docker-compose'
+alias dcu='docker-compose up'
+alias dcb='docker-compose build'
+alias dcr='docker-compose run'
+alias dvrm='docker volume rm $(docker volume ls -qf dangling=true)'
+
+# kubernetes
+alias k='kubectl'
+alias kg='kubectl get'
+alias kga='kubectl get all'
+alias kl='kubectl logs'
+alias kc='kubectl create'
+alias kcf='kubectl create -f'
+alias kd='kubectl describe'
+alias kdf='kubectl describe -f'
+alias ka='kubectl apply'
+alias kaf='kubectl apply -f'
+alias kdel='kubectl delete'
+alias kdelf='kubectl delete -f'
+alias ke='kubectl exec'
+
+# rbenv
+eval "$(rbenv init -)"
+
+# shortcuts
+bindkey '[C' forward-word
+bindkey '[D' backward-word
+
+# enable fzf for fuzzy searching
+set rtp+=~/.fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
