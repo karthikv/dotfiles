@@ -8,10 +8,5 @@ ln -s ~/dotfiles/zshrc .zshrc
 ln -s ~/dotfiles/vim .vim
 ln -s ~/dotfiles/oh-my-zsh .oh-my-zsh
 
-echo "Building command-t plugin..."
-cd dotfiles/vim/bundle/command-t/ruby/command-t
-ruby extconf.rb
-make
-
 cd ~
 echo "Done!"
