@@ -2,13 +2,13 @@ call plug#begin()
 
 "languages
 Plug 'fatih/vim-go', {'commit': '3eb57ac'}
-Plug 'pangloss/vim-javascript', {'commit': '26c7330'}
+Plug 'pangloss/vim-javascript', {'commit': '871ab29'}
 Plug 'ElmCast/elm-vim', {'commit': '16a9a38'}
 Plug 'dag/vim2hs', {'commit': 'f2afd55'}
 Plug 'elixir-lang/vim-elixir', {'commit': '1cfd5ab'}
 Plug 'rust-lang/rust.vim', {'commit': 'e651851'}
 
-"config/templating
+"config/templating/extensions
 Plug 'elzr/vim-json', {'commit': 'f5e3181'}
 Plug 'mxw/vim-jsx', {'commit': 'd0ad98c'}
 Plug 'hashivim/vim-terraform', {'commit': 'bfc6ef2'}
@@ -130,37 +130,23 @@ let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
 let g:neomake_javascript_enabled_makers = []
 let g:neomake_jsx_enabled_makers = []
 
-"neomake with locally installed eslint
-let local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
-if matchstr(local_eslint, '^\/\\w') == ''
-  let local_eslint = getcwd() . '/' . local_eslint
-endif
-if executable(local_eslint)
-  let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
+"neomake with locally-installed (node_modules) eslint/flow
+if executable('eslint')
   let g:neomake_javascript_enabled_makers += ['eslint']
-  let g:neomake_jsx_eslint_exe = $PWD .'/node_modules/.bin/eslint'
   let g:neomake_jsx_enabled_makers += ['eslint']
 end
-
-"neomake with locally installed flow
-let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
-if matchstr(local_flow, '^\/\\w') == ''
-  let local_flow = getcwd() . '/' . local_flow
-endif
-if executable(local_flow)
-  let g:neomake_javascript_flow_exe = local_flow
+if executable('flow')
   let g:neomake_javascript_enabled_makers += ['flow']
-  let g:neomake_jsx_flow_exe = local_flow
   let g:neomake_jsx_enabled_makers += ['flow']
-endif
+end
 
 "automatically add end braces
 inoremap <CR> <C-R>=CleverBrace()<CR>
 function! CleverBrace()
   if strpart(getline('.'), col('.') - 2, 1) =~ '{'
-    return '\<CR>}\<ESC>O'
+    return "\<CR>}\<ESC>O"
   else
-    return '\<CR>'
+    return "\<CR>"
 endfunction
 
 "format javascript on save with prettier. much of the following code is taken from
