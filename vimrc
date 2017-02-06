@@ -134,11 +134,11 @@ let g:neomake_jsx_enabled_makers = []
 if executable('eslint')
   let g:neomake_javascript_enabled_makers += ['eslint']
   let g:neomake_jsx_enabled_makers += ['eslint']
-end
+endif
 if executable('flow')
   let g:neomake_javascript_enabled_makers += ['flow']
   let g:neomake_jsx_enabled_makers += ['flow']
-end
+endif
 
 "automatically add end braces
 inoremap <CR> <C-R>=CleverBrace()<CR>
@@ -149,9 +149,13 @@ function! CleverBrace()
     return "\<CR>"
 endfunction
 
-"format javascript on save with prettier. much of the following code is taken from
-"fatih/vim-go: https://github.com/fatih/vim-go/blob/1425dec/autoload/go/fmt.vim
-autocmd BufWritePre *.js call PrettierFormat()
+"format javascript on save with prettier
+if executable('prettier')
+  autocmd BufWritePre *.js call PrettierFormat()
+endif
+
+"much of the following code is taken/repurposed from fatih/vim-go:
+"https://github.com/fatih/vim-go/blob/1425dec/autoload/go/fmt.vim
 function! PrettierFormat() abort
   "save cursor position and many other things
   let l:curw = winsaveview()
@@ -160,14 +164,14 @@ function! PrettierFormat() abort
   let l:tmpname = tempname()
   call writefile(getline(1, '$'), l:tmpname)
 
-  "update temp file and then actual file
+  "format temp file and replace actual file
   let out = system('prettier --write ' . l:tmpname)
   if v:shell_error == 0
     call PrettierUpdateFile(l:tmpname, expand('%'))
-  end
-
-  "we didn't use the temp file, so clean up
-  call delete(l:tmpname)
+  else
+    "we didn't use the temp file, so clean up
+    call delete(l:tmpname)
+  endif
 
   "restore our cursor/windows positions
   call winrestview(l:curw)
