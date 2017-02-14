@@ -22,6 +22,7 @@ Plug 'neomake/neomake', {'commit': '75f9f3b'}  "linting
 Plug 'tomtom/tcomment_vim', {'commit': 'c982b13'}  "commenting blocks
 Plug 'tpope/vim-surround', {'commit': '1a73f60'}  "change surrounding
 Plug 'vim-airline/vim-airline', {'commit': '7b9b68f'}  "status bar
+Plug 'sbdchd/neoformat', {'commit': '2111755'}  "auto formatting
 
 call plug#end()
 
@@ -140,6 +141,9 @@ if executable('flow')
   let g:neomake_jsx_enabled_makers += ['flow']
 endif
 
+"neoformat: format javascript on save
+autocmd BufWritePre *.js Neoformat
+
 "automatically add end braces
 inoremap <CR> <C-R>=CleverBrace()<CR>
 function! CleverBrace()
@@ -147,57 +151,4 @@ function! CleverBrace()
     return "\<CR>}\<ESC>O"
   else
     return "\<CR>"
-endfunction
-
-"format javascript on save with prettier
-if executable('prettier')
-  autocmd BufWritePre *.js call PrettierFormat()
-endif
-
-"much of the following code is taken/repurposed from fatih/vim-go:
-"https://github.com/fatih/vim-go/blob/1425dec/autoload/go/fmt.vim
-function! PrettierFormat() abort
-  "save cursor position and many other things
-  let l:curw = winsaveview()
-
-  "write current unsaved buffer to a temp file
-  let l:tmpname = tempname()
-  call writefile(getline(1, '$'), l:tmpname)
-
-  "format temp file and replace actual file
-  let out = system('prettier --write ' . l:tmpname)
-  if v:shell_error == 0
-    call PrettierUpdateFile(l:tmpname, expand('%'))
-  else
-    "we didn't use the temp file, so clean up
-    call delete(l:tmpname)
-  endif
-
-  "restore our cursor/windows positions
-  call winrestview(l:curw)
-endfunction
-
-"replaces the target file with the formatted source file
-function! PrettierUpdateFile(source, target)
-  "remove undo point caused via BufWritePre
-  try | silent undojoin | catch | endtry
-
-  let old_fileformat = &fileformat
-  if exists('*getfperm')
-    "save file permissions
-    let original_fperm = getfperm(a:target)
-  endif
-
-  call rename(a:source, a:target)
-
-  "restore file permissions
-  if exists('*setfperm') && original_fperm != ''
-    call setfperm(a:target , original_fperm)
-  endif
-
-  "reload buffer to reflect latest changes
-  silent! edit!
-
-  let &fileformat = old_fileformat
-  let &syntax = &syntax
 endfunction
