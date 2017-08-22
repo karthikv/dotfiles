@@ -1,6 +1,6 @@
 cd ~
 echo "Cloning dotfiles repository..."
-git clone --recursive https://github.com/karthikv/dotfiles.git
+git clone --recursive https://github.com/taithethai/dotfiles.git
 
 echo "Symlinking dotfiles..."
 ln -s ~/dotfiles/vimrc .vimrc
