@@ -10,6 +10,9 @@ export PATH=$PATH:$HOME/.stack/programs/x86_64-osx/ghc-7.10.3/bin
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/Active/go/bin
 export PATH=$PATH:$HOME/.cargo/bin
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export GOPATH=~/Active/go
 export ANDROID_HOME=/usr/local/opt/android-sdk
@@ -45,7 +48,9 @@ ZSH_THEME="terminalparty"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(battery brew django extract git node npm osx pip python gpg-agent)
+plugins=(battery brew django extract git node npm osx pip python) 
+# gpg-agent was previously in the plugin, just testing to see if this will stop some error
+# messages.
 
 source $ZSH/oh-my-zsh.sh
 
@@ -68,18 +73,18 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 alias gl='git log'
 alias gf='git fetch'
-alias gfk='git fetch karthikv'
+alias gft='git fetch taithethai'
 alias gfo='git fetch origin'
 alias gr='git rebase'
 alias gro='git rebase origin/$(current_branch)'
 alias gmo='git merge origin/$(current_branch)'
 alias gcb='git checkout -b'
 alias gpo='git push -u origin $(current_branch)'
-alias gpk='git push -u karthikv $(current_branch)'
+alias gpt='git push -u taithethai $(current_branch)'
 alias grs='git reset --soft'
 alias grh='git reset --hard'
 alias grho='git reset --hard origin/$(current_branch)'
-alias grhk='git reset --hard karthikv/$(current_branch)'
+alias grht='git reset --hard taithethai/$(current_branch)'
 alias gc='git checkout'
 alias gsh='git stash'
 alias gsha='git stash apply'
@@ -89,8 +94,8 @@ gdv() { git diff -w "$@" | nvim -R - }
 gdcv() { git diff --cached -w "$@" | nvim -R - }
 alias gbd='git branch -d'
 alias gbD='git branch -D'
-alias grbdo='git push origin'
-alias grbdk='git push karthikv'
+# alias grbdo='git push origin' deprecated, see gpo
+# alias grbdt='git push taithethai' deprecated, see gpt
 alias gra='git remote add'
 alias grm='git remote rm'
 alias gcl='git changelog'
@@ -154,7 +159,7 @@ alias kdelf='kubectl delete -f'
 alias ke='kubectl exec'
 
 # rbenv
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 
 # shortcuts
 bindkey '[C' forward-word

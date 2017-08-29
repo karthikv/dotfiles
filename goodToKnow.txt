@@ -1,0 +1,2 @@
+run `defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false` to enable key-repeats outside of terminal
+
