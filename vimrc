@@ -22,8 +22,8 @@ Plug 'neomake/neomake', {'commit': '75f9f3b'}  "linting
 Plug 'tomtom/tcomment_vim', {'commit': 'c982b13'}  "commenting blocks
 Plug 'tpope/vim-surround', {'commit': '1a73f60'}  "change surrounding
 Plug 'vim-airline/vim-airline', {'commit': '7b9b68f'}  "status bar
-Plug 'sbdchd/neoformat', {'commit': '2111755'}  "auto formatting
-
+"Plug 'sbdchd/neoformat', {'commit': '2111755'}  "auto formatting
+"Plug 'prettier/vim-prettier', { 'do': 'yarn install' } "prettier for Vim
 call plug#end()
 
 "enable filetypes (already done by vim-plug, but in case that changes)
@@ -123,7 +123,7 @@ let g:jsx_ext_required = 0  "vim-jsx: make .jsx extension not requried
 let g:go_fmt_fail_silently = 1  "vim-go: don't complain if fmt fails
 let g:go_fmt_command = 'goimports'  "vim-go: use goimports as fmt tool
 let g:elm_format_autosave = 1  "elm-vim: format on save
-autocmd! BufWritePost,BufEnter * Neomake  "neomake: run on save
+autocmd! BufWritePre,BufEnter * Neomake  "neomake: run on save
 
 "neomake makers for different languages
 let g:neomake_go_enabled_makers = ['go']
@@ -142,7 +142,19 @@ if executable('flow')
 endif
 
 "neoformat: format javascript on save
-autocmd BufWritePre *.js Neoformat
+"autocmd BufWritePre *.js Neoformat
+"uncomment for neoformat. Needs love for eslint reading?
+
+"netrw, but with NERDtree feels?
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 5
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :Vexplore
+augroup END
 
 "automatically add end braces
 inoremap <CR> <C-R>=CleverBrace()<CR>

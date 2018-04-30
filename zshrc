@@ -100,6 +100,7 @@ alias gra='git remote add'
 alias grm='git remote rm'
 alias gcl='git changelog'
 alias gct='git commit -v'
+alias gcm='git commit -m'
 
 # hub aliases
 alias hc='hub create'
