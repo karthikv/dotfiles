@@ -1,12 +1,16 @@
 call plug#begin()
 
 "languages
+Plug 'vim-ruby/vim-ruby', {'commit': '71f5df7'}
 Plug 'fatih/vim-go', {'commit': '3eb57ac'}
 Plug 'pangloss/vim-javascript', {'commit': '871ab29'}
+Plug 'karthikv/vim-typescript', {'commit': '6fe7b52'}
 Plug 'ElmCast/elm-vim', {'commit': '16a9a38'}
-Plug 'dag/vim2hs', {'commit': 'f2afd55'}
+Plug 'neovimhaskell/haskell-vim', {'commit': '1862418'}
 Plug 'elixir-lang/vim-elixir', {'commit': '1cfd5ab'}
 Plug 'rust-lang/rust.vim', {'commit': 'e651851'}
+Plug 'zah/nim.vim', {'commit': 'dcf2579'}
+Plug '~/Active/par-vim'
 
 "config/templating/extensions
 Plug 'elzr/vim-json', {'commit': 'f5e3181'}
@@ -15,14 +19,16 @@ Plug 'hashivim/vim-terraform', {'commit': 'bfc6ef2'}
 Plug 'digitaltoad/vim-pug', {'commit': 'eb8c6b2'}
 Plug 'tpope/vim-markdown', {'commit': 'dcdab0c'}
 Plug 'wavded/vim-stylus', {'commit': '9ab38f0'}
+Plug 'slim-template/vim-slim', {'commit': 'b19d372'}
 
 "misc
 Plug 'morhetz/gruvbox', {'commit': '127c9d1'}  "colorscheme
-Plug 'neomake/neomake', {'commit': '75f9f3b'}  "linting
+Plug 'w0rp/ale', {'commit': '95be2bf'}  "linting
 Plug 'tomtom/tcomment_vim', {'commit': 'c982b13'}  "commenting blocks
 Plug 'tpope/vim-surround', {'commit': '1a73f60'}  "change surrounding
 Plug 'vim-airline/vim-airline', {'commit': '7b9b68f'}  "status bar
-Plug 'sbdchd/neoformat', {'commit': '2111755'}  "auto formatting
+Plug 'karthikv/tradeship-vim', {'commit': '849651d'}  "auto imports
+Plug '/usr/local/opt/fzf'  "fuzzy finder
 
 call plug#end()
 
@@ -60,7 +66,7 @@ set autoindent
 
 "better line wrapping
 set wrap
-set textwidth=90
+set textwidth=80
 set formatoptions=qrn1
 
 "case insensitive search
@@ -71,12 +77,29 @@ set smartcase
 au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.epy set filetype=htmldjango
 au BufNewFile,BufRead *.json set filetype=json
+au BufNewFile,BufRead *.ts set filetype=typescript
 
 "gruvbox theme
 set background=dark
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 colorscheme gruvbox
+
+let g:terminal_color_0 = '#282828'
+let g:terminal_color_1 = '#cc241d'
+let g:terminal_color_2 = '#98971a'
+let g:terminal_color_3 = '#d79921'
+let g:terminal_color_4 = '#458588'
+let g:terminal_color_5 = '#b16286'
+let g:terminal_color_6 = '#689d6a'
+let g:terminal_color_7 = '#a89984'
+let g:terminal_color_8 = '#928374'
+let g:terminal_color_9 = '#fb4934'
+let g:terminal_color_10 = '#b8bb26'
+let g:terminal_color_11 = '#fabd2f'
+let g:terminal_color_12 = '#83a598'
+let g:terminal_color_13 = '#d3869b'
+let g:terminal_color_14 = '#8ec07c'
+let g:terminal_color_15 = '#ebdbb2'
 
 "highlighting
 highlight LineNr ctermfg=black
@@ -123,26 +146,18 @@ let g:jsx_ext_required = 0  "vim-jsx: make .jsx extension not requried
 let g:go_fmt_fail_silently = 1  "vim-go: don't complain if fmt fails
 let g:go_fmt_command = 'goimports'  "vim-go: use goimports as fmt tool
 let g:elm_format_autosave = 1  "elm-vim: format on save
-autocmd! BufWritePost,BufEnter * Neomake  "neomake: run on save
 
-"neomake makers for different languages
-let g:neomake_go_enabled_makers = ['go']
-let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
-let g:neomake_javascript_enabled_makers = []
-let g:neomake_jsx_enabled_makers = []
+let g:ale_linters = {
+\  'typescript': ['tsserver'],
+\  'ruby': ['rubocop'],
+\}
+let g:ale_fixers = {
+\  'typescript': ['prettier'],
+\}
+let g:ale_fix_on_save = 1
 
-"neomake with locally-installed (node_modules) eslint/flow
-if executable('eslint')
-  let g:neomake_javascript_enabled_makers += ['eslint']
-  let g:neomake_jsx_enabled_makers += ['eslint']
-endif
-if executable('flow')
-  let g:neomake_javascript_enabled_makers += ['flow']
-  let g:neomake_jsx_enabled_makers += ['flow']
-endif
-
-"neoformat: format javascript on save
-autocmd BufWritePre *.js Neoformat
+"tradeship: import on shortcut
+nnoremap <C-A-i> :Tradeship<CR>
 
 "automatically add end braces
 inoremap <CR> <C-R>=CleverBrace()<CR>
@@ -152,3 +167,6 @@ function! CleverBrace()
   else
     return "\<CR>"
 endfunction
+
+"disable indentexpr in erl files
+autocmd FileType erlang setlocal indentexpr=

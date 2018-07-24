@@ -4,12 +4,16 @@ ZSH=$HOME/.oh-my-zsh
 export PATH=node_modules/.bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/opt/openssl/bin:$PATH
 export PATH=$PATH:$HOME/Bin
 export PATH=$PATH:/usr/local/Cellar/opencv3/3.1.0/bin
-export PATH=$PATH:$HOME/.stack/programs/x86_64-osx/ghc-7.10.3/bin
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/Active/go/bin
 export PATH=$PATH:$HOME/.cargo/bin
+export PATH=$PATH:$HOME/.nimble/bin
+
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+export PKG_CONFIG_PATH=/usr/local/opt/imagemagick@6/lib/pkgconfig:$PKG_CONFIG_PATH
 
 export GOPATH=~/Active/go
 export ANDROID_HOME=/usr/local/opt/android-sdk
@@ -142,16 +146,25 @@ alias dvrm='docker volume rm $(docker volume ls -qf dangling=true)'
 alias k='kubectl'
 alias kg='kubectl get'
 alias kga='kubectl get all'
+alias kgp='kubectl get po'
+alias kgr='kubectl get rs'
+alias kgd='kubectl get deploy'
 alias kl='kubectl logs'
 alias kc='kubectl create'
 alias kcf='kubectl create -f'
 alias kd='kubectl describe'
+alias kdp='kubectl describe po'
+alias kdr='kubectl describe rs'
+alias kdd='kubectl describe deploy'
 alias kdf='kubectl describe -f'
 alias ka='kubectl apply'
 alias kaf='kubectl apply -f'
 alias kdel='kubectl delete'
 alias kdelf='kubectl delete -f'
 alias ke='kubectl exec'
+
+# newer make
+alias make='gmake'
 
 # rbenv
 eval "$(rbenv init -)"
@@ -160,6 +173,9 @@ eval "$(rbenv init -)"
 bindkey '[C' forward-word
 bindkey '[D' backward-word
 
-# enable fzf for fuzzy searching
-set rtp+=~/.fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+
+# OSX has too low a limit on open files, so increase it:
+# https://superuser.com/questions/827984/open-files-limit-does-not-work-as-before-in-osx-yosemite/828010#828010
+ulimit -n 65536 65536
