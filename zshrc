@@ -68,6 +68,7 @@ alias vim='nvim'
 alias rmv='find . -type f -regex ".*\.sw[pon]" -exec rm -f {} \;'
 
 # git aliases
+alias ga='git add .'
 alias gi='git init'
 alias gd='git diff'
 alias gdc='git diff --cached'
@@ -79,6 +80,7 @@ alias gr='git rebase'
 alias gro='git rebase origin/$(current_branch)'
 alias gmo='git merge origin/$(current_branch)'
 alias gcb='git checkout -b'
+alias gp='git push'
 alias gpo='git push -u origin $(current_branch)'
 alias gpt='git push -u taithethai $(current_branch)'
 alias grs='git reset --soft'
@@ -169,3 +171,6 @@ bindkey '[D' backward-word
 # enable fzf for fuzzy searching
 set rtp+=~/.fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# thefuck commandcorrector
+eval $(thefuck --alias)
