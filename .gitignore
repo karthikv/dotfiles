@@ -2,3 +2,4 @@
 *.sw[pon]
 vim/plugged
 .netrwhist
+oh-my-zsh
