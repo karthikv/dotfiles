@@ -174,3 +174,4 @@ set rtp+=~/.fzf
 
 # thefuck commandcorrector
 eval $(thefuck --alias)
+

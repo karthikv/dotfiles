@@ -1,29 +1,31 @@
 call plug#begin()
 
 "languages
-Plug 'fatih/vim-go', {'commit': '3eb57ac'}
-Plug 'pangloss/vim-javascript', {'commit': '871ab29'}
-Plug 'ElmCast/elm-vim', {'commit': '16a9a38'}
-Plug 'dag/vim2hs', {'commit': 'f2afd55'}
-Plug 'elixir-lang/vim-elixir', {'commit': '1cfd5ab'}
-Plug 'rust-lang/rust.vim', {'commit': 'e651851'}
+Plug 'pangloss/vim-javascript'
 
 "config/templating/extensions
-Plug 'elzr/vim-json', {'commit': 'f5e3181'}
-Plug 'mxw/vim-jsx', {'commit': 'd0ad98c'}
-Plug 'hashivim/vim-terraform', {'commit': 'bfc6ef2'}
-Plug 'digitaltoad/vim-pug', {'commit': 'eb8c6b2'}
-Plug 'tpope/vim-markdown', {'commit': 'dcdab0c'}
-Plug 'wavded/vim-stylus', {'commit': '9ab38f0'}
+Plug 'elzr/vim-json'
+Plug 'mxw/vim-jsx'
+Plug 'hashivim/vim-terraform'
+Plug 'digitaltoad/vim-pug'
+Plug 'tpope/vim-markdown'
+Plug 'wavded/vim-stylus'
+Plug 'slim-template/vim-slim'
 
 "misc
-Plug 'morhetz/gruvbox', {'commit': '127c9d1'}  "colorscheme
-Plug 'neomake/neomake', {'commit': '75f9f3b'}  "linting
-Plug 'tomtom/tcomment_vim', {'commit': 'c982b13'}  "commenting blocks
-Plug 'tpope/vim-surround', {'commit': '1a73f60'}  "change surrounding
-Plug 'vim-airline/vim-airline', {'commit': '7b9b68f'}  "status bar
-"Plug 'sbdchd/neoformat', {'commit': '2111755'}  "auto formatting
-"Plug 'prettier/vim-prettier', { 'do': 'yarn install' } "prettier for Vim
+Plug 'morhetz/gruvbox' "colorscheme
+Plug 'w0rp/ale' "linting
+Plug 'tomtom/tcomment_vim' "commenting blocks
+Plug 'tpope/vim-surround' "change surrounding
+Plug 'vim-airline/vim-airline' "status bar
+Plug 'karthikv/tradeship-vim' "auto imports
+Plug '/usr/local/opt/fzf'  "fuzzy finder
+Plug 'scrooloose/nerdtree' "filenav
+Plug 'airblade/vim-gitgutter' 
+Plug 'Xuyuanp/nerdtree-git-plugin' "git for NERDtree
+Plug 'wesQ3/vim-windowswap' "keybind is sww at first buffer, and sww to swap buffer
+Plug 'ap/vim-css-color' "color preview
+Plug 'mbbill/undotree' "undo tree :UndotreeToggle
 call plug#end()
 
 "enable filetypes (already done by vim-plug, but in case that changes)
@@ -98,11 +100,11 @@ let mapleader='s'
 nmap <Leader>l :vsplit<CR><C-l>
 nmap <Leader>j :split<CR>
 nmap <Leader>r :redraw!<CR>
-nmap <Leader>s :set spell! spell?<CR>
+"nmap <Leader>s :set spell! spell?<CR>
 nmap <Leader>h :set hls! hls?<CR>
 nmap <Leader>2 :set ts=2 sts=2 sw=2 et<CR>
 nmap <Leader>4 :set ts=4 sts=4 sw=4 et<CR>
-nmap <Leader>p :set invpaste paste?<CR>
+"nmap <Leader>p :set invpaste paste?<CR>
 nmap <Leader>v :source %<CR>
 nmap <C-p> :FZF<CR>
 
@@ -120,41 +122,17 @@ iab Teh The
 
 let g:javascript_plugin_flow = 1  "vim-javascript: enable flow highlighting
 let g:jsx_ext_required = 0  "vim-jsx: make .jsx extension not requried
-let g:go_fmt_fail_silently = 1  "vim-go: don't complain if fmt fails
-let g:go_fmt_command = 'goimports'  "vim-go: use goimports as fmt tool
-let g:elm_format_autosave = 1  "elm-vim: format on save
-autocmd! BufWritePre,BufEnter * Neomake  "neomake: run on save
 
-"neomake makers for different languages
-let g:neomake_go_enabled_makers = ['go']
-let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
-let g:neomake_javascript_enabled_makers = []
-let g:neomake_jsx_enabled_makers = []
+ let g:ale_linters = {
+ \  'javascript': ['eslint'],
+ \}
+let g:ale_fixers = {
+\  'javascript': ['eslint'],
+\}
+let g:ale_fix_on_save = 1
 
-"neomake with locally-installed (node_modules) eslint/flow
-if executable('eslint')
-  let g:neomake_javascript_enabled_makers += ['eslint']
-  let g:neomake_jsx_enabled_makers += ['eslint']
-endif
-if executable('flow')
-  let g:neomake_javascript_enabled_makers += ['flow']
-  let g:neomake_jsx_enabled_makers += ['flow']
-endif
-
-"neoformat: format javascript on save
-"autocmd BufWritePre *.js Neoformat
-"uncomment for neoformat. Needs love for eslint reading?
-
-"netrw, but with NERDtree feels?
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 5
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore
-augroup END
+"tradeship: import on shortcut
+nnoremap <C-A-i> :Tradeship<CR>
 
 "automatically add end braces
 inoremap <CR> <C-R>=CleverBrace()<CR>
@@ -164,3 +142,10 @@ function! CleverBrace()
   else
     return "\<CR>"
 endfunction
+
+"NERDTree
+autocmd vimenter * NERDTree
+"close vim if NERDTree is the only window left open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+
