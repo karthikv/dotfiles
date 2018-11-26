@@ -1,7 +1,7 @@
 .DS_Store
+oh-my-zsh/
 *.sw[pon]
 vim/plugged
 .netrwhist
 /oh-my-zsh
-oh-my-zsh/
 
