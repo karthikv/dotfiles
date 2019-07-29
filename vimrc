@@ -27,6 +27,7 @@ Plug 'w0rp/ale', {'commit': '9226e13'}  "linting
 Plug 'tomtom/tcomment_vim', {'commit': 'c982b13'}  "commenting blocks
 Plug 'tpope/vim-surround', {'commit': '1a73f60'}  "change surrounding
 Plug 'vim-airline/vim-airline', {'commit': '3d9071e'}  "status bar
+Plug 'vim-airline/vim-airline-themes', {'commit': 'e6f2332'}  "status bar
 Plug 'karthikv/tradeship-vim', {'commit': '849651d'}  "auto imports
 Plug 'christoomey/vim-tmux-navigator', {'commit': '9f7d158'}  "tmux movement
 
@@ -164,6 +165,7 @@ let g:go_fmt_fail_silently = 1  "vim-go: don't complain if fmt fails
 let g:go_fmt_command = 'goimports'  "vim-go: use goimports as fmt tool
 let g:elm_format_autosave = 1  "elm-vim: format on save
 
+let g:airline_theme = 'term'
 let g:airline#extensions#ale#enabled = 1
 let g:ale_linters = {
       \  'typescript': ['tsserver'],
