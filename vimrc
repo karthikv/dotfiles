@@ -88,6 +88,11 @@ set formatoptions=qrn1
 set ignorecase
 set smartcase
 
+"backups
+set writebackup
+set nobackup
+set backupcopy=yes  "to ensure file watching works
+
 "file types
 augroup Custom
   au!
