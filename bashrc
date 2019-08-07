@@ -56,12 +56,14 @@ if [ -n "$force_color_prompt" ]; then
   fi
 fi
 
+DISTRO=$(cat /etc/*-release | grep "^ID=" | cut -d'=' -f2)
+
 if [ "$color_prompt" = yes ]; then
   # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@ubuntu\[\033[00m\]:\[\033[01;34m\]${PWD#"${PWD%/*/*}/"}\[\033[00m\]\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@${DISTRO}\[\033[00m\]:\[\033[01;34m\]${PWD#"${PWD%/*/*}/"}\[\033[00m\]\$ '
 else
   # PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-  PS1='${debian_chroot:+($debian_chroot)}\u@ubuntu:${PWD#"${PWD%/*/*}/"}\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\u@${DISTRO}:${PWD#"${PWD%/*/*}/"}\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -69,7 +71,7 @@ unset color_prompt force_color_prompt
 case "$TERM" in
   xterm*|rxvt*)
     # PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}ubuntu\a\]$PS1"
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}${DISTRO}\a\]$PS1"
     ;;
   *)
     ;;
@@ -127,6 +129,7 @@ export PATH="/usr/local/go/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 export FZF_DEFAULT_COMMAND="ag -g '.*'"
 
 eval "$(rbenv init -)"
