@@ -162,8 +162,9 @@ alias vi='nvim'
 alias vim='nvim'
 alias rmv='find . -type f -regex ".*\.sw[pon]" -exec rm -f {} \;'
 
-# tmux aliases
+# misc aliases
 alias tmux='TERM=xterm-256color tmux'
+alias c='clip.exe'
 
 # git aliases
 alias g='git'
