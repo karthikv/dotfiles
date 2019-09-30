@@ -23,7 +23,7 @@ Plug 'slim-template/vim-slim', {'commit': 'b19d372'}
 
 "misc
 Plug 'jeffkreeftmeijer/vim-dim', {'commit': '00d1b3b'}  "theme
-Plug 'w0rp/ale', {'commit': '9226e13'}  "linting
+Plug 'dense-analysis/ale', {'commit': '41ff80d'}  "linting
 Plug 'tomtom/tcomment_vim', {'commit': 'c982b13'}  "commenting blocks
 Plug 'tpope/vim-surround', {'commit': '1a73f60'}  "change surrounding
 Plug 'vim-airline/vim-airline', {'commit': '3d9071e'}  "status bar
@@ -147,6 +147,7 @@ nmap <Leader>t :terminal<CR>
 nmap <Leader>d :ALEDetail<CR>
 nmap <Leader>e :ALEHover<CR>
 nmap <Leader>g :ALEGoToDefinition<CR>
+nmap <Leader>r :ALERename<CR>
 nmap <Leader>x :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
       \ . '> trans<' . synIDattr(synID(line("."),col("."),0),"name")
       \ . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")
@@ -246,6 +247,27 @@ function! s:TSHandleImportResponse(file, conn_id, response) abort
   endfor
 endfunction
 
+function! s:TSImportOnReady(line, column, file, linter, lsp_details) abort
+  if a:linter.lsp isnot# 'tsserver'
+    return
+  endif
+
+  let l:id = a:lsp_details.connection_id
+  let l:Callback = function('s:TSHandleImportResponse', [a:file])
+  call ale#lsp#RegisterCallback(l:id, l:Callback)
+
+  let l:message = [0, 'ts@getCodeFixes', {
+        \   'startLine': a:line,
+        \   'startOffset': a:column,
+        \   'endLine': a:line,
+        \   'endOffset': a:column,
+        \   'file': a:file,
+        \   'errorCodes': [2304],
+        \}]
+
+  call ale#lsp#Send(l:id, l:message)
+endfunction
+
 function! TSImportReference() abort
   for l:linter in ale#linter#Get(&filetype)
     if l:linter.lsp is# 'tsserver'
@@ -255,27 +277,8 @@ function! TSImportReference() abort
 
   let l:buffer = bufnr('')
   let [l:line, l:column] = getcurpos()[1:2]
-  let l:lsp_details = ale#lsp_linter#StartLSP(l:buffer, l:linter)
-
-  if empty(l:lsp_details)
-    return 0
-  endif
-
-  let l:id = l:lsp_details.connection_id
-  let l:buffer = l:lsp_details.buffer
-
   let l:file = expand('#' . l:buffer . ':p')
-  let l:Callback = function('s:TSHandleImportResponse', [l:file])
-  call ale#lsp#RegisterCallback(l:id, l:Callback)
 
-  let l:message = [0, 'ts@getCodeFixes', {
-        \   'startLine': l:line,
-        \   'startOffset': l:column,
-        \   'endLine': l:line,
-        \   'endOffset': l:column,
-        \   'file': l:file,
-        \   'errorCodes': [2304],
-        \}]
-
-  call ale#lsp#Send(l:id, l:message)
+  let l:Callback = function('s:TSImportOnReady', [l:line, l:column, l:file])
+  let l:lsp_details = ale#lsp_linter#StartLSP(l:buffer, l:linter, l:Callback)
 endfunction
