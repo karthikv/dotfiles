@@ -147,7 +147,7 @@ nmap <Leader>t :terminal<CR>
 nmap <Leader>d :ALEDetail<CR>
 nmap <Leader>e :ALEHover<CR>
 nmap <Leader>g :ALEGoToDefinition<CR>
-nmap <Leader>r :ALERename<CR>
+nmap <Leader>n :ALERename<CR>
 nmap <Leader>x :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
       \ . '> trans<' . synIDattr(synID(line("."),col("."),0),"name")
       \ . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")
@@ -174,6 +174,7 @@ let g:elm_format_autosave = 1  "elm-vim: format on save
 let g:airline_theme = 'term'
 let g:airline#extensions#ale#enabled = 1
 let g:ale_linters = {
+      \  'javascript': [],
       \  'typescript': ['tsserver'],
       \  'ruby': ['rubocop'],
       \  'rust': ['rls'],
