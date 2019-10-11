@@ -13,7 +13,7 @@
                 "command" : "closePane",
                 "keys" : 
                 [
-                    "ctrl+w"
+                    "ctrl+shift+w"
                 ]
             },
             {
