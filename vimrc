@@ -44,6 +44,7 @@ call plug#end()
 "enable filetypes (already done by vim-plug, but in case that changes)
 filetype plugin indent on
 syntax enable
+syntax sync minlines=10000  "so highlighting doesn't break in large files
 
 set nocompatible  "no compatibility with vi
 set omnifunc=syntaxcomplete#Complete  "omni search
@@ -148,6 +149,7 @@ nmap <Leader>d :ALEDetail<CR>
 nmap <Leader>e :ALEHover<CR>
 nmap <Leader>g :ALEGoToDefinition<CR>
 nmap <Leader>n :ALERename<CR>
+nmap <Leader>; :ALEReset<CR>:ALEDisable<CR>:ALEEnable<CR>
 nmap <Leader>x :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
       \ . '> trans<' . synIDattr(synID(line("."),col("."),0),"name")
       \ . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")
