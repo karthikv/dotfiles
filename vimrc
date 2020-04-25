@@ -142,6 +142,7 @@ nmap <Leader>s :set spell! spell?<CR>
 nmap <Leader>h :set hls! hls?<CR>
 nmap <Leader>2 :set ts=2 sts=2 sw=2 et<CR>
 nmap <Leader>4 :set ts=4 sts=4 sw=4 et<CR>
+nmap <Leader>8 :set ts=8 sts=8 sw=8 et<CR>
 nmap <Leader>p :set invpaste paste?<CR>
 nmap <Leader>v :source %<CR>
 nmap <Leader>t :terminal<CR>
@@ -162,6 +163,9 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   let g:ctrlp_use_caching = 0
 endif
+
+"search for text under cursor
+vnoremap * y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 "spelling corrections
 iab teh the
