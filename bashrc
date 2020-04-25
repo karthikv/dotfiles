@@ -165,6 +165,7 @@ alias rmv='find . -type f -regex ".*\.sw[pon]" -exec rm -f {} \;'
 # misc aliases
 alias tmux='TERM=xterm-256color tmux'
 alias c='clip.exe'
+alias nf='npx nodefront'
 
 # git aliases
 alias g='git'
@@ -230,10 +231,6 @@ alias ndm='nodemon'
 alias ...='../..'
 alias ....='../../..'
 alias .....='../../../..'
-
-# nodefront aliases
-alias nodefront='~/Active/nodefront/nodefront.js'
-alias nf='nodefront'
 
 # docker aliases
 alias d='docker'
