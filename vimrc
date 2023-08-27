@@ -4,7 +4,7 @@ call plug#begin()
 Plug 'vim-ruby/vim-ruby', {'commit': '71f5df7'}
 Plug 'fatih/vim-go', {'commit': '3eb57ac'}
 Plug 'pangloss/vim-javascript', {'commit': '871ab29'}
-Plug 'leafgarland/typescript-vim', {'commit': '5a319ea'}
+Plug 'leafgarland/typescript-vim', {'commit': '31ede5a'}
 Plug 'MaxMEllon/vim-jsx-pretty', {'commit': '77c2063'}
 Plug 'ElmCast/elm-vim', {'commit': '16a9a38'}
 Plug 'neovimhaskell/haskell-vim', {'commit': '1862418'}
@@ -45,6 +45,11 @@ call plug#end()
 filetype plugin indent on
 syntax enable
 syntax sync minlines=10000  "so highlighting doesn't break in large files
+
+"fix typescript syntax in nvim - see https://github.com/leafgarland/typescript-vim/issues/184
+hi link typescriptReserved Keyword
+hi link typescriptParens Operator
+hi link typescriptNull Type
 
 set nocompatible  "no compatibility with vi
 set omnifunc=syntaxcomplete#Complete  "omni search
