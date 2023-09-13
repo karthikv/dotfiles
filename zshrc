@@ -121,6 +121,7 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias vim="nvim"
 gro() { git rebase "origin/$(current_branch)" }
 alias gsh="git stash"
 alias gl="git log"
@@ -131,4 +132,5 @@ alias gc="git checkout"
 alias gct="git commit --verbose"
 alias gctnv="git commit --verbose --no-verify"
 alias gsha="git stash apply"
-alias vim="nvim"
+alias gr="git rebase"
+alias grh="git reset --hard"
