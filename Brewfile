@@ -8,6 +8,7 @@ cask 'gimp'
 cask 'whatsapp'
 cask 'scroll-reverser'
 cask 'betterdisplay'
+cask 'appcleaner'
 
 #--- Passwords
 brew 'pass'
@@ -29,3 +30,6 @@ brew 'z'
 brew 'wget'
 # Allows using Touch ID for sudo in tmux.
 brew 'pam-reattach'
+# For flamescope.
+brew 'libmagic'
+brew 'gh'
