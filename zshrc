@@ -70,7 +70,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ssh-agent)
+plugins=(git ssh-agent zsh-syntax-highlighting)
 
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 source $ZSH/oh-my-zsh.sh
@@ -90,12 +90,15 @@ source "$HOMEBREW_PREFIX/etc/profile.d/z.sh"
 # Set up Postgres CLI tools.
 export PGDATA="$HOME/Library/Application Support/Postgres/var-15"
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/cosmos/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"  # pipx
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -134,3 +137,6 @@ alias gctnv="git commit --verbose --no-verify"
 alias gsha="git stash apply"
 alias gr="git rebase"
 alias grh="git reset --hard"
+
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word

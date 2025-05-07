@@ -130,6 +130,7 @@ export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export FZF_DEFAULT_COMMAND="ag -g '.*'"
 
 eval "$(rbenv init -)"

@@ -1,5 +1,6 @@
 #--- Apps
 cask 'iterm2'
+cask 'ghostty'
 cask 'spotify'
 cask 'zoom'
 cask 'rectangle'
@@ -9,6 +10,10 @@ cask 'whatsapp'
 cask 'scroll-reverser'
 cask 'betterdisplay'
 cask 'appcleaner'
+cask 'steam'
+cask 'discord'
+cask 'slack'
+cask 'audacity'
 
 #--- Passwords
 brew 'pass'
@@ -33,3 +38,15 @@ brew 'pam-reattach'
 # For flamescope.
 brew 'libmagic'
 brew 'gh'
+brew 'fd'
+brew 'jq'
+
+brew 'go'
+brew 'clojure'
+brew 'leiningen'
+brew 'borkdude/brew/clj-kondo'
+brew 'elixir'
+brew 'ollama'
+
+brew 'uv'
+brew 'pg_top'

@@ -2,7 +2,7 @@ call plug#begin()
 
 "languages
 Plug 'vim-ruby/vim-ruby', {'commit': '71f5df7'}
-Plug 'fatih/vim-go', {'commit': '3eb57ac'}
+Plug 'fatih/vim-go', {'commit': 'a64d097'}
 Plug 'pangloss/vim-javascript', {'commit': '871ab29'}
 Plug 'leafgarland/typescript-vim', {'commit': '31ede5a'}
 Plug 'MaxMEllon/vim-jsx-pretty', {'commit': '77c2063'}
@@ -11,6 +11,10 @@ Plug 'neovimhaskell/haskell-vim', {'commit': '1862418'}
 Plug 'elixir-lang/vim-elixir', {'commit': '1cfd5ab'}
 Plug 'rust-lang/rust.vim', {'commit': 'e651851'}
 Plug 'zah/nim.vim', {'commit': 'dcf2579'}
+Plug 'clojure-vim/clojure.vim', {'commit': '06196d8'}
+Plug 'Olical/conjure', {'commit': '6d2bc7f'}
+Plug 'luochen1990/rainbow', {'commit': '76ca1a2'}
+Plug 'nvim-treesitter/nvim-treesitter', {'commit': '5a2ff8b', 'do': ':TSUpdate'}
 Plug '~/Active/par-vim'
 
 "config/templating/extensions
@@ -23,7 +27,8 @@ Plug 'slim-template/vim-slim', {'commit': 'b19d372'}
 
 "misc
 Plug 'jeffkreeftmeijer/vim-dim', {'commit': '00d1b3b'}  "theme
-Plug 'dense-analysis/ale', {'commit': '41ff80d'}  "linting
+" Plug 'dense-analysis/ale', {'commit': '41ff80d'}  "linting
+Plug 'dense-analysis/ale', {'commit': '9546821'}  "linting
 Plug 'tomtom/tcomment_vim', {'commit': 'c982b13'}  "commenting blocks
 Plug 'tpope/vim-surround', {'commit': '1a73f60'}  "change surrounding
 Plug 'vim-airline/vim-airline', {'commit': '3d9071e'}  "status bar
@@ -33,7 +38,7 @@ Plug 'christoomey/vim-tmux-navigator', {'commit': '9f7d158'}  "tmux movement
 
 "file searching
 Plug 'junegunn/fzf', {
-      \  'commit': 'd4ed955',
+      \  'commit': 'b2ecb63',
       \  'dir': '~/.fzf',
       \  'do': './install --all'
       \}
@@ -109,15 +114,26 @@ augroup Custom
   au BufNewFile,BufRead *.tsx set filetype=typescript.tsx
   au FileType erlang setlocal indentexpr=
   au FileType typescript nmap <Leader>i :call TSImportReference()<CR>
+  au FileType typescript.tsx nmap <Leader>i :call TSImportReference()<CR>
 augroup END
+
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 "theme
 colorscheme dim
+set notermguicolors
 hi! Identifier ctermfg=blue
 hi! PreProc ctermfg=magenta
 hi! Special ctermfg=magenta
-hi! Statement ctermfg=green
-hi! Type ctermfg=cyan
+hi! Constant ctermfg=yellow
+hi! Type ctermfg=green
+hi! Statement ctermfg=magenta
+hi! Conditional ctermfg=blue
 
 hi! SpellBad ctermfg=white ctermbg=red
 hi! def link Error SpellBad
@@ -126,6 +142,9 @@ hi! def link Todo SpellCap
 
 hi! def link tsxTagName Function
 hi! def link tsxCloseString Function
+hi! String ctermfg=red
+hi! Keyword ctermfg=darkcyan
+" hi! Label ctermfg=darkgreen (for 'async' keyword)
 
 "completion
 imap <C-j> <C-n>
@@ -140,6 +159,7 @@ nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
 
 "helpful shortcuts
 let mapleader='s'
+let maplocalleader=','
 nmap <Leader>l :vsplit<CR><M-l>
 nmap <Leader>j :split<CR>
 nmap <Leader>r :redraw!<CR>
@@ -163,11 +183,6 @@ nmap <Leader>x :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
 
 "file searching
 nmap <C-p> :Files<CR>
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
 
 "search for text under cursor
 vnoremap * y/\V<C-R>=escape(@",'/\')<CR><CR>
@@ -194,6 +209,8 @@ let g:ale_fixers = {
       \  'javascript': ['prettier'],
       \  'typescript': ['prettier'],
       \  'rust': ['rustfmt'],
+      \  'python': ['ruff_format'],
+      \  'elixir': ['mix_format'],
       \}
 let g:ale_rust_rls_toolchain = 'nightly-2019-02-08'
 let g:ale_fix_on_save = 1
